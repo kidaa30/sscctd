@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_tdsimulator" default="compile.module.tdsimulator">
+  <dirname property="module.tdsimulator.basedir" file="${ant.file.module_tdsimulator}"/>
+  
+  <property name="module.jdk.home.tdsimulator" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.tdsimulator" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.tdsimulator" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.tdsimulator" value="${compiler.args}"/>
+  
+  <property name="tdsimulator.output.dir" value="${module.tdsimulator.basedir}/out/production/TDSimulator"/>
+  <property name="tdsimulator.testoutput.dir" value="${module.tdsimulator.basedir}/out/test/TDSimulator"/>
+  
+  <path id="tdsimulator.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="tdsimulator.module.production.classpath">
+    <path refid="${module.jdk.classpath.tdsimulator}"/>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  <path id="tdsimulator.runtime.production.module.classpath">
+    <pathelement location="${tdsimulator.output.dir}"/>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  <path id="tdsimulator.module.classpath">
+    <path refid="${module.jdk.classpath.tdsimulator}"/>
+    <pathelement location="${tdsimulator.output.dir}"/>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  <path id="tdsimulator.runtime.module.classpath">
+    <pathelement location="${tdsimulator.testoutput.dir}"/>
+    <pathelement location="${tdsimulator.output.dir}"/>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.tdsimulator">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.tdsimulator">
+    <patternset refid="excluded.from.module.tdsimulator"/>
+  </patternset>
+  
+  <path id="tdsimulator.module.sourcepath">
+    <dirset dir="${module.tdsimulator.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.tdsimulator" depends="compile.module.tdsimulator.production,compile.module.tdsimulator.tests" description="Compile module TDSimulator"/>
+  
+  <target name="compile.module.tdsimulator.production" depends="register.custom.compilers" description="Compile module TDSimulator; production classes">
+    <mkdir dir="${tdsimulator.output.dir}"/>
+    <javac2 destdir="${tdsimulator.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.tdsimulator}/javac">
+      <compilerarg line="${compiler.args.tdsimulator}"/>
+      <bootclasspath refid="tdsimulator.module.bootclasspath"/>
+      <classpath refid="tdsimulator.module.production.classpath"/>
+      <src refid="tdsimulator.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.tdsimulator"/>
+    </javac2>
+    
+    <copy todir="${tdsimulator.output.dir}">
+      <fileset dir="${module.tdsimulator.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.tdsimulator.tests" depends="register.custom.compilers,compile.module.tdsimulator.production" description="compile module TDSimulator; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.tdsimulator" description="cleanup module">
+    <delete dir="${tdsimulator.output.dir}"/>
+    <delete dir="${tdsimulator.testoutput.dir}"/>
+  </target>
+</project>

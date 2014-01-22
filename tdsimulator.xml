@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="tdsimulator" default="all">
+  
+  
+  <property file="tdsimulator.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="128m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/.pyc/**"/>
+    <exclude name="**/.pyo/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/*.lib/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/.bundle/**"/>
+    <exclude name="**/*.rbc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.zip"/>
+    <include name="*.apk"/>
+    <include name="*.war"/>
+    <include name="*.egg"/>
+    <include name="*.ear"/>
+    <include name="*.ane"/>
+    <include name="*.swc"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.1.6" value="${jdk.home.1.6}/bin"/>
+  <path id="jdk.classpath.1.6">
+    <fileset dir="${jdk.home.1.6}">
+      <include name="lib/deploy.jar"/>
+      <include name="lib/dt.jar"/>
+      <include name="lib/javaws.jar"/>
+      <include name="lib/jce.jar"/>
+      <include name="lib/jconsole.jar"/>
+      <include name="lib/management-agent.jar"/>
+      <include name="lib/plugin.jar"/>
+      <include name="lib/sa-jdi.jar"/>
+      <include name="../Classes/charsets.jar"/>
+      <include name="../Classes/classes.jar"/>
+      <include name="../Classes/jsse.jar"/>
+      <include name="../Classes/ui.jar"/>
+      <include name="lib/ext/apple_provider.jar"/>
+      <include name="lib/ext/dnsns.jar"/>
+      <include name="lib/ext/localedata.jar"/>
+      <include name="lib/ext/sunjce_provider.jar"/>
+      <include name="lib/ext/sunpkcs11.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.6}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.6}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.6"/>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.lib.classpath">
+    <pathelement location="${basedir}/lib/dom4j-1.6.1.jar"/>
+    <pathelement location="${basedir}/lib/extra166y.jar"/>
+    <pathelement location="${basedir}/lib/geronimo-stax-api_1.0_spec-1.0.jar"/>
+    <pathelement location="${basedir}/lib/jcommon-1.0.17.jar"/>
+    <pathelement location="${basedir}/lib/jfreechart-1.0.14.jar"/>
+    <pathelement location="${basedir}/lib/jgoodies-forms-1.7.1-javadoc.jar"/>
+    <pathelement location="${basedir}/lib/jgoodies-forms-1.7.1-sources.jar"/>
+    <pathelement location="${basedir}/lib/jgoodies-forms-1.7.1-tests.jar"/>
+    <pathelement location="${basedir}/lib/jgoodies-forms-1.7.1.jar"/>
+    <pathelement location="${basedir}/lib/jsr166y.jar"/>
+    <pathelement location="${basedir}/lib/poi-3.7-20101029.jar"/>
+    <pathelement location="${basedir}/lib/poi-3.8-beta5-20111217.jar"/>
+    <pathelement location="${basedir}/lib/poi-3.9-20121203.jar"/>
+    <pathelement location="${basedir}/lib/poi-ooxml-3.7-20101029.jar"/>
+    <pathelement location="${basedir}/lib/poi-ooxml-3.8-beta5-20111217.jar"/>
+    <pathelement location="${basedir}/lib/poi-ooxml-3.9-20121203.jar"/>
+    <pathelement location="${basedir}/lib/poi-ooxml-schemas-3.7-20101029.jar"/>
+    <pathelement location="${basedir}/lib/poi-ooxml-schemas-3.8-beta5-20111217.jar"/>
+    <pathelement location="${basedir}/lib/poi-ooxml-schemas-3.9-20121203.jar"/>
+    <pathelement location="${basedir}/lib/td.jar"/>
+    <pathelement location="${basedir}/lib/xmlbeans-2.3.0.jar"/>
+  </path>
+  <!-- Register Custom Compiler Taskdefs -->
+  <property name="javac2.home" value="${idea.home}/lib"/>
+  <path id="javac2.classpath">
+    <pathelement location="${javac2.home}/javac2.jar"/>
+    <pathelement location="${javac2.home}/jdom.jar"/>
+    <pathelement location="${javac2.home}/asm4-all.jar"/>
+    <pathelement location="${javac2.home}/jgoodies-forms.jar"/>
+  </path>
+  <target name="register.custom.compilers">
+    <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
+    <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
+  </target>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module TDSimulator -->
+  
+  <dirname property="module.tdsimulator.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.tdsimulator" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.tdsimulator" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.tdsimulator" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.tdsimulator" value="${compiler.args}"/>
+  
+  <property name="tdsimulator.output.dir" value="${module.tdsimulator.basedir}/out/production/TDSimulator"/>
+  <property name="tdsimulator.testoutput.dir" value="${module.tdsimulator.basedir}/out/test/TDSimulator"/>
+  
+  <path id="tdsimulator.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="tdsimulator.module.production.classpath">
+    <path refid="${module.jdk.classpath.tdsimulator}"/>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  <path id="tdsimulator.runtime.production.module.classpath">
+    <pathelement location="${tdsimulator.output.dir}"/>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  <path id="tdsimulator.module.classpath">
+    <path refid="${module.jdk.classpath.tdsimulator}"/>
+    <pathelement location="${tdsimulator.output.dir}"/>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  <path id="tdsimulator.runtime.module.classpath">
+    <pathelement location="${tdsimulator.testoutput.dir}"/>
+    <pathelement location="${tdsimulator.output.dir}"/>
+    <path refid="library.lib.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.tdsimulator">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.tdsimulator">
+    <patternset refid="excluded.from.module.tdsimulator"/>
+  </patternset>
+  
+  <path id="tdsimulator.module.sourcepath">
+    <dirset dir="${module.tdsimulator.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.tdsimulator" depends="compile.module.tdsimulator.production,compile.module.tdsimulator.tests" description="Compile module TDSimulator"/>
+  
+  <target name="compile.module.tdsimulator.production" depends="register.custom.compilers" description="Compile module TDSimulator; production classes">
+    <mkdir dir="${tdsimulator.output.dir}"/>
+    <javac2 destdir="${tdsimulator.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.tdsimulator}/javac">
+      <compilerarg line="${compiler.args.tdsimulator}"/>
+      <bootclasspath refid="tdsimulator.module.bootclasspath"/>
+      <classpath refid="tdsimulator.module.production.classpath"/>
+      <src refid="tdsimulator.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.tdsimulator"/>
+    </javac2>
+    
+    <copy todir="${tdsimulator.output.dir}">
+      <fileset dir="${module.tdsimulator.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.tdsimulator.tests" depends="register.custom.compilers,compile.module.tdsimulator.production" description="compile module TDSimulator; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.tdsimulator" description="cleanup module">
+    <delete dir="${tdsimulator.output.dir}"/>
+    <delete dir="${tdsimulator.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.tdsimulator" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.tdsimulator" description="build all modules"/>
+  
+  <target name="all" depends="build.modules" description="build all"/>
+</project>
